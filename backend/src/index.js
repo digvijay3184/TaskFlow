@@ -11,12 +11,7 @@ const app = express();
 const frontEndUrl = process.env.FRONT_END_URL ;
 
 app.use(
-  cors({
-    origin: [frontEndUrl],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma"],
-    credentials: true,
-  })
+  cors()
 );
 app.use(express.json());
 
