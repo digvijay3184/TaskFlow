@@ -1,30 +1,36 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../features/auth/authSlice';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+function Navbar() {
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.auth);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/login');
   };
 
   return (
-    <nav className="bg-blue-500 text-white p-4">
-      <div className="container mx-auto flex justify-between">
-        <Link to="/" className="text-xl font-bold">TaskFlow</Link>
-        {user && (
-          <div>
-            <span className="mr-4">{user.email}</span>
-            <button onClick={handleLogout} className="bg-red-500 p-2 rounded">
-              Logout
-            </button>
-          </div>
+    <nav className="navbar">
+      <h1>TaskFlow</h1>
+      <div>
+        {user ? (
+          <>
+            <span>{user.email}</span>
+            <a href="#" onClick={handleLogout}>Logout</a>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
         )}
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

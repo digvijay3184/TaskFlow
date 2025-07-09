@@ -8,7 +8,7 @@ import Tasks from './pages/Tasks';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
+      <div className="container">
         <Navbar />
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -26,3 +26,5 @@ function App() {
     </Router>
   );
 }
+
+export default App;

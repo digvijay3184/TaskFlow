@@ -1,53 +1,56 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../features/auth/authSlice';
-import { useNavigate, Link } from 'react-router-dom';
 
-const Login = () => {
+function Login() {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const { email, password } = formData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector(state => state.auth);
-  const [form, setForm] = useState({ email: '', password: '' });
+  const { error } = useSelector((state) => state.auth);
 
-  const handleSubmit = async (e) => {
+  const onChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(login(form));
-    if (login.fulfilled.match(result)) {
+    const result = await dispatch(login({ email, password }));
+    if (result.type === 'auth/login/fulfilled') {
       navigate('/');
     }
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-md">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {loading && <p>Loading...</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={e => setForm({ ...form, email: e.target.value })}
-          required
-          className="border p-2 w-full"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={e => setForm({ ...form, password: e.target.value })}
-          required
-          className="border p-2 w-full"
-        />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
-          Login
-        </button>
+    <div className="form-container">
+      <h2>Login</h2>
+      {error && <p className="error">{error}</p>}
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <button type="submit">Login</button>
       </form>
-      <p className="mt-4">
-        Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
-      </p>
     </div>
   );
-};
+}
 
 export default Login;
