@@ -19,8 +19,15 @@ function Tasks() {
     setDescription('');
   };
 
-  const handleUpdate = (task) => {
-    dispatch(updateTask({ id: task._id, data: { ...task, completed: !task.completed } }));
+  const handleUpdate = async (task) => {
+    const updatedData = {
+      title: task.title,
+      description: task.description,
+      status: task.status === 'Completed' ? 'To Do' : 'Completed',
+    };
+    console.log('Dispatching updateTask with:', { id: task._id, data: updatedData });
+    const result = await dispatch(updateTask({ id: task._id, data: updatedData }));
+    console.log('Update result:', result);
   };
 
   const handleDelete = (id) => {
@@ -57,9 +64,9 @@ function Tasks() {
           <div key={task._id} className="task-card">
             <h3>{task.title}</h3>
             <p>{task.description}</p>
-            <p>Status: {task.completed ? 'Completed' : 'Pending'}</p>
+            <p>Status: {task.status}</p>
             <button onClick={() => handleUpdate(task)}>
-              {task.completed ? 'Mark Incomplete' : 'Mark Complete'}
+              {task.status === 'Completed' ? 'Mark Incomplete' : 'Mark Complete'}
             </button>
             <button onClick={() => handleDelete(task._id)}>Delete</button>
           </div>

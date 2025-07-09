@@ -1,3 +1,4 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
 
@@ -21,7 +22,8 @@ export const getTasks = createAsyncThunk('tasks/getTasks', async (_, { rejectWit
 
 export const updateTask = createAsyncThunk('tasks/updateTask', async ({ id, data }, { rejectWithValue }) => {
   try {
-    const response = await api.put(`/tasks/${id}`, data);
+    const { title, description, status } = data; // Send only necessary fields
+    const response = await api.put(`/tasks/${id}`, { title, description, status });
     return response.data;
   } catch (err) {
     return rejectWithValue(err.response.data.message);
