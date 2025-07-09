@@ -8,9 +8,11 @@ const taskRoutes = require('./routes/tasks');
 
 const app = express();
 
+const frontEndUrl = process.env.FRONT_END_URL ;
+
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [frontEndUrl],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization", "Cache-Control", "Expires", "Pragma"],
     credentials: true,
