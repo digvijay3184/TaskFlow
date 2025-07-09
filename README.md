@@ -147,9 +147,9 @@ GET /api/tasks/tree - Get hierarchical task structure.
 ![Register Page](image-1.png)
 ![Landing Page](image-2.png)
 ## Operations
-Updation of the Task
+### Updation of the Task
 ![Updation of Task](image-3.png)
-Deletion of a Task 
+### Deletion of a Task 
 ![deletion](image-4.png)
-Multiple Tasks
+### Multiple Tasks
 ![multiple task](image-5.png)
