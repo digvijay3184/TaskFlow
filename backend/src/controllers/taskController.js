@@ -215,7 +215,7 @@ exports.hasCircularDependency = async (taskId, dependsOnTaskId) => {
   const visited = new Set();
   const recStack = new Set();
 
-  const dfs = async (currentTaskId) => {
+  const dfs = async (currentTaskId) => {  
     visited.add(currentTaskId.toString());
     recStack.add(currentTaskId.toString());
 

@@ -15,7 +15,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <h1>TaskFlow</h1>
+      <h1>TaskOverFlow</h1>
       <div>
         {user ? (
           <>
